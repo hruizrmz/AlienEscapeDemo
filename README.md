@@ -1,2 +1,0 @@
-# FirstRojoProject
- First Roblox game
