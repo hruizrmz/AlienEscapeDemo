@@ -4,15 +4,60 @@
       "$className": "DataModel",
       "ReplicatedStorage": {
          "$ignoreUnknownInstances": true,
-         "$path": "src/ReplicatedStorage"
+         "Remotes": {
+            "$className": "Folder",
+            "ShowResultsText": {
+               "$className": "RemoteEvent"
+            },
+            "ShowRoleText": {
+               "$className": "RemoteEvent"
+            }
+         }
       },
       "ServerScriptService": {
-         "Server": {
-            "$ignoreUnknownInstances": true,
-            "$path": "src/ServerScriptService"
+         "$ignoreUnknownInstances": true,
+         "$path": "src/ServerScriptService"
+      },
+      "ServerStorage": {
+         "$ignoreUnknownInstances": true,
+         "$className": "ServerStorage",
+         "PlayerData": {
+            "$className": "Folder",
+            "leaderstats": {
+               "$className": "Folder",
+               "Tokens": {
+                  "$className": "IntValue"
+               },
+               "Wins": {
+                  "$className": "IntValue"
+               }
+            },
+            "isAlien": {
+               "$className": "BoolValue"
+            }
+         }
+      },
+      "StarterGui": {
+         "$ignoreUnknownInstances": true,
+         "$className": "StarterGui",
+         "Main": {
+            "$className": "ScreenGui",
+            "LobbyStatus": {
+               "$className": "TextLabel",
+               "$path": "src/StarterGUI/Main/LobbyStatus"
+            },
+            "Results": {
+               "$className": "TextLabel",
+               "$path": "src/StarterGUI/Main/Results"
+            },
+            "Role": {
+               "$className": "TextLabel",
+               "$path": "src/StarterGUI/Main/Role"
+            }
          }
       },
       "StarterPlayer": {
+         "$className": "StarterPlayer",
          "StarterCharacterScripts": {
             "$ignoreUnknownInstances": true,
             "$path": "src/CharacterScripts"
