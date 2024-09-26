@@ -1,4 +1,3 @@
-local player = game.Players.LocalPlayer
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
 
 ReplicatedStorage.Remotes.ShowRoleText.OnClientEvent:Connect(function(alien)
