@@ -15,22 +15,6 @@
             }
          }
       },
-      "ReplicatedStorage": {
-         "$ignoreUnknownInstances": true,
-         "Remotes": {
-            "$className": "Folder",
-            "ShowResultsText": {
-               "$className": "RemoteEvent"
-            },
-            "ShowRoleText": {
-               "$className": "RemoteEvent"
-            }
-         }
-      },
-      "ServerScriptService": {
-         "$ignoreUnknownInstances": true,
-         "$path": "src/ServerScriptService"
-      },
       "ServerStorage": {
          "$ignoreUnknownInstances": true,
          "$className": "ServerStorage",
@@ -56,6 +40,12 @@
             },
             "modelChanged": {
                "$className": "BoolValue"
+            }
+         },
+         "TagList": {
+            "$className": "Folder",
+            "EscapePodDoor": {
+               "$className": "Configuration"
             }
          },
          "Alien": {
