@@ -1,4 +1,5 @@
 local Players = game:GetService("Players")
+local CollectionService = game:GetService("CollectionService")
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
 local ServerStorage = game:GetService("ServerStorage")
 local playerData = ServerStorage:WaitForChild("PlayerData")
@@ -8,10 +9,11 @@ local PointValues = require(game:GetService("ServerScriptService").PointValues)
 
 local PLAYERS_NEEDED_TO_START = 2
 local INTERMISSION_TIME = 3
-local HUMAN_SPEED = 30
+local HUMAN_SPEED = 32
+local HUMAN_JUMP_POWER = 35
 local ALIEN_SPEED = 32
 local ALIEN_RESPAWN_BUFFER = 3
-local GAME_TIME = 25
+local GAME_TIME = 10
 
 local function playerSettings(player)
     player.CharacterAdded:Connect(function(character)
@@ -19,8 +21,8 @@ local function playerSettings(player)
             character.Humanoid.WalkSpeed = ALIEN_SPEED
         else
             character.Humanoid.WalkSpeed = HUMAN_SPEED
+            character.Humanoid.JumpPower = HUMAN_JUMP_POWER
         end
-        character.Humanoid:SetStateEnabled(Enum.HumanoidStateType.Climbing, false)
     end)
 end
 
@@ -43,6 +45,13 @@ end
 
 local function setUpGame()
     status.Value = ""
+    for i, door in pairs(CollectionService:GetTagged("EscapePodDoor")) do
+        door.Occupied.Value = true
+        door.Material = "DiamondPlate"
+        door.BrickColor = BrickColor.new("Maroon")
+        door.Transparency = 0.2
+        door.CollisionGroup = "Default"
+    end
     for i, player in pairs(Players:GetPlayers()) do
         for key, list in pairs(PlayerTables) do
             if type(list) == "table" then
@@ -125,6 +134,14 @@ local function gameLoop()
         status.Value = "Aliens will wake up in "..i..""
     end
     status.Value = ""
+
+    for i, door in pairs(CollectionService:GetTagged("EscapePodDoor")) do
+        door.Occupied.Value = false
+        door.Material = "CrackedLava"
+        door.BrickColor = BrickColor.new("Teal")
+        door.Transparency = 0.4
+        door.CollisionGroup = "PodDoors"
+    end
 
     -- game time logic
     for i = GAME_TIME, 0, -1 do

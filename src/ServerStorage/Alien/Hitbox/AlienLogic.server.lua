@@ -3,6 +3,7 @@ local PlayerTables = require(game:GetService("ServerScriptService").PlayerTables
 local PointValues = require(game:GetService("ServerScriptService").PointValues)
 
 local spawnLocation = game.Workspace:WaitForChild("SpawnLocation")
+local isTouching = false
 
 local function findPlayerPosition(table, player)
     for i, v in ipairs(table) do
@@ -15,7 +16,6 @@ end
 
 -- if an alien catches a human, they respawn as an alien
 local function onCatch(alienPlayer, humanPlayer)
-    print(alienPlayer.Name .. " has caught " .. humanPlayer.Name)
     alienPlayer.leaderstats.AlienPoints.Value = alienPlayer.leaderstats.AlienPoints.Value + PointValues.EatHuman
     humanPlayer:FindFirstChild("isAlien").Value = true
     table.remove(PlayerTables.HumansPlaying, findPlayerPosition(PlayerTables.HumansPlaying, humanPlayer))
@@ -26,16 +26,19 @@ local function onCatch(alienPlayer, humanPlayer)
 end
 
 local function onTouched(otherPart)
+    isTouching = true
     if not script.Parent.Parent.HumanoidRootPart.Anchored then
         local humanPlayer = Players:GetPlayerFromCharacter(otherPart.Parent)
-        if humanPlayer and humanPlayer:FindFirstChild("isAlien") and not humanPlayer.isAlien.Value then
+        if humanPlayer and not humanPlayer:FindFirstChild("isAlien").Value then
             -- check that player character is valid as well
             local alienPlayer = Players:GetPlayerFromCharacter(script.Parent.Parent)
             if alienPlayer then
                 onCatch(alienPlayer, humanPlayer)
+                task.wait(1)
             end
         end
     end
+    isTouching = false
 end
 
 local hitbox = script.Parent

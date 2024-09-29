@@ -10,14 +10,14 @@ local function onTouched(otherPart) -- when player respawns, check if their mode
     local alienHRP = alien:WaitForChild("HumanoidRootPart")
     local humanPlayer = Players:GetPlayerFromCharacter(otherPart.Parent)
     if humanPlayer and not humanPlayer:FindFirstChild("modelChanged").Value and humanPlayer:FindFirstChild("isAlien").Value then
-        alienHRP.CFrame = humanPlayer.Character.HumanoidRootPart.CFrame
+        alienHRP.CFrame = humanPlayer.Character:WaitForChild("HumanoidRootPart").CFrame
         alien.Name = humanPlayer.Name
         humanPlayer.Character = alien
         alien.Parent = Workspace
         humanPlayer.modelChanged.Value = true
 
         humanPlayer.Character.HumanoidRootPart.Anchored = true -- anchor aliens temporarily to give humans an advantage
-        task.wait(ALIEN_RESPAWN_BUFFER+3)
+        task.wait(ALIEN_RESPAWN_BUFFER+2)
         humanPlayer.Character.HumanoidRootPart.Anchored = false
     end
 end
