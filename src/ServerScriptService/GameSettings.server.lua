@@ -62,8 +62,9 @@ local function setUpGame()
             player:FindFirstChild("isAlien").Value = false
             player:FindFirstChild("modelChanged").Value = false
         end
-        respawnPlayers()
+        ReplicatedStorage.Remotes.HideSpectateUI:FireClient(player)
     end
+    respawnPlayers()
 end
 
 local function gameLoop()
@@ -82,6 +83,10 @@ local function gameLoop()
         for i = INTERMISSION_TIME, -1, -1 do
             task.wait(1)
             status.Value = "Prepare to run in "..i..""
+        end
+
+        if #Players:GetPlayers() < PLAYERS_NEEDED_TO_START then
+            gameLoop()
         end
     end
     status.Value = ""
@@ -129,12 +134,6 @@ local function gameLoop()
         end
     end
 
-    for i = ALIEN_RESPAWN_BUFFER, -1, -1 do
-        task.wait(1)
-        status.Value = "Aliens will wake up in "..i..""
-    end
-    status.Value = ""
-
     for i, door in pairs(CollectionService:GetTagged("EscapePodDoor")) do
         door.Occupied.Value = false
         door.Material = "CrackedLava"
@@ -142,6 +141,12 @@ local function gameLoop()
         door.Transparency = 0.4
         door.CollisionGroup = "PodDoors"
     end
+
+    for i = ALIEN_RESPAWN_BUFFER, -1, -1 do
+        task.wait(1)
+        status.Value = "Aliens will wake up in "..i..""
+    end
+    status.Value = ""
 
     -- game time logic
     for i = GAME_TIME, 0, -1 do

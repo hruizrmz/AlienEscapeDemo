@@ -2,6 +2,7 @@ local CollectionService = game:GetService("CollectionService")
 local Players = game:GetService("Players")
 local PlayerTables = require(game:GetService("ServerScriptService").PlayerTables)
 local PointValues = require(game:GetService("ServerScriptService").PointValues)
+local ReplicatedStorage = game:GetService("ReplicatedStorage")
 
 local function findPlayerPosition(table, player)
     for i, v in ipairs(table) do
@@ -17,16 +18,20 @@ local function onTouched(otherPart, door)
         local player = Players:GetPlayerFromCharacter(otherPart.Parent)
         if player and not player:FindFirstChild("isAlien").Value then
             door.Occupied.Value = true
-            task.wait(0.1)
             door.Material = "DiamondPlate"
             door.BrickColor = BrickColor.new("Maroon")
             door.Transparency = 0.2
             door.CollisionGroup = "Default"
-            player.Character.Humanoid.JumpPower = 0
             ------
             player.leaderstats.HumanPoints.Value = player.leaderstats.HumanPoints.Value + PointValues.EscapeShip
             table.remove(PlayerTables.HumansPlaying, findPlayerPosition(PlayerTables.HumansPlaying, player))
             table.insert(PlayerTables.Escaped, player)
+            ReplicatedStorage.Remotes.ShowSpectateUI:FireClient(player)
+            ------
+            local character = player.Character
+            local seat = door:FindFirstChild("PodSeat")
+            character:MoveTo(seat.Position)
+            player.Character.Humanoid.JumpPower = 0
         end
     end
 end

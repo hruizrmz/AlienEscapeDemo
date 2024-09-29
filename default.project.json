@@ -86,6 +86,13 @@
                "$className": "TextLabel",
                "$path": "src/StarterGUI/Main/Role"
             }
+         },
+         "SpectateUI": {
+            "$className": "ScreenGui",
+            "$path": "src/StarterGUI/SpectateUI",
+            "Buttons": {
+               "$className": "Frame"
+            }
          }
       },
       "StarterPlayer": {
