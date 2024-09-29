@@ -2,7 +2,7 @@ local ReplicatedStorage = game:GetService("ReplicatedStorage")
 
 ReplicatedStorage.Remotes.ShowRoleText.OnClientEvent:Connect(function(alien)
 	if alien then
-		script.Parent.Text = "You are an alien: find the humans!"
+		script.Parent.Text = "You are an alien: catch the humans!"
 	else 
 		script.Parent.Text = "You are a human: escape the aliens!"
 	end

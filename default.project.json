@@ -2,9 +2,21 @@
    "name": "project",
    "tree": {
       "$className": "DataModel",
+      "Workspace": {
+         "$ignoreUnknownInstances": true,
+         "SpawnLocation": {
+            "$className": "SpawnLocation",
+            "Hitbox": {
+               "$className": "Part",
+               "$path": "src/Workspace/SpawnLocation/Hitbox",
+               "WeldConstraint": {
+                  "$className": "WeldConstraint"
+               }
+            }
+         }
+      },
       "ReplicatedStorage": {
          "$ignoreUnknownInstances": true,
-         "$path": "src/ReplicatedStorage",
          "Remotes": {
             "$className": "Folder",
             "ShowResultsText": {
@@ -26,15 +38,34 @@
             "$className": "Folder",
             "leaderstats": {
                "$className": "Folder",
-               "Tokens": {
+               "AlienWins": {
                   "$className": "IntValue"
                },
-               "Wins": {
+               "AlienPoints": {
+                  "$className": "IntValue"
+               },
+               "HumanWins": {
+                  "$className": "IntValue"
+               },
+               "HumanPoints": {
                   "$className": "IntValue"
                }
             },
             "isAlien": {
                "$className": "BoolValue"
+            },
+            "modelChanged": {
+               "$className": "BoolValue"
+            }
+         },
+         "Alien": {
+            "$className": "Model",
+            "Hitbox": {
+               "$className": "Part",
+               "$path": "src/ServerStorage/Alien/Hitbox",
+               "WeldConstraint": {
+                  "$className": "WeldConstraint"
+               }
             }
          }
       },
