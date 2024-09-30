@@ -8,12 +8,12 @@ local PlayerTables = require(game:GetService("ServerScriptService").PlayerTables
 local PointValues = require(game:GetService("ServerScriptService").PointValues)
 
 local PLAYERS_NEEDED_TO_START = 2
-local INTERMISSION_TIME = 3
-local HUMAN_SPEED = 32
+local INTERMISSION_TIME = 5
+local HUMAN_SPEED = 40
 local HUMAN_JUMP_POWER = 35
-local ALIEN_SPEED = 32
-local ALIEN_RESPAWN_BUFFER = 3
-local GAME_TIME = 10
+local ALIEN_SPEED = 48
+local ALIEN_RESPAWN_BUFFER = 4
+local GAME_TIME = 60
 
 local function playerSettings(player)
     player.CharacterAdded:Connect(function(character)
