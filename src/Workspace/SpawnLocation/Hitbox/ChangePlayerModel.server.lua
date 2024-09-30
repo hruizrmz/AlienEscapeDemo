@@ -3,7 +3,7 @@ local Players = game:GetService("Players")
 local ServerStorage = game:GetService("ServerStorage")
 local alienModel = ServerStorage:WaitForChild("Alien")
 
-local ALIEN_RESPAWN_BUFFER = 3
+local ALIEN_RESPAWN_BUFFER = 4
 
 local function onTouched(otherPart) -- when player respawns, check if their model has to be changed or not
     local alien = alienModel:Clone()

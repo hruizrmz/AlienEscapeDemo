@@ -8,7 +8,7 @@ local PlayerTables = require(game:GetService("ServerScriptService").PlayerTables
 local PointValues = require(game:GetService("ServerScriptService").PointValues)
 
 local PLAYERS_NEEDED_TO_START = 2
-local INTERMISSION_TIME = 5
+local INTERMISSION_TIME = 10
 local HUMAN_SPEED = 40
 local HUMAN_JUMP_POWER = 35
 local ALIEN_SPEED = 48
@@ -23,6 +23,7 @@ local function playerSettings(player)
             character.Humanoid.WalkSpeed = HUMAN_SPEED
             character.Humanoid.JumpPower = HUMAN_JUMP_POWER
         end
+        character.Humanoid.DisplayDistanceType = Enum.HumanoidDisplayDistanceType.None
     end)
 end
 
@@ -116,6 +117,7 @@ local function gameLoop()
         if uniqueIDs[i] then
             player:FindFirstChild("isAlien").Value = true
             table.insert(PlayerTables.AliensPlaying, player)
+            table.insert(PlayerTables.OriginalAliens, player)
         else
             player:FindFirstChild("isAlien").Value = false
             table.insert(PlayerTables.HumansPlaying, player)
@@ -124,9 +126,9 @@ local function gameLoop()
 
     -- preparing game arena
     respawnPlayers()
+    task.wait(1)
 
     for i, player in pairs(Players:GetPlayers()) do
-        task.wait(1)
         if uniqueIDs[i] then
             ReplicatedStorage.Remotes.ShowRoleText:FireClient(player,true)
         else

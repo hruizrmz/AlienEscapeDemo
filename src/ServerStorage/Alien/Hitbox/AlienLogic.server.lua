@@ -26,19 +26,21 @@ local function onCatch(alienPlayer, humanPlayer)
 end
 
 local function onTouched(otherPart)
-    isTouching = true
-    if not script.Parent.Parent.HumanoidRootPart.Anchored then
-        local humanPlayer = Players:GetPlayerFromCharacter(otherPart.Parent)
-        if humanPlayer and not humanPlayer:FindFirstChild("isAlien").Value then
-            -- check that player character is valid as well
-            local alienPlayer = Players:GetPlayerFromCharacter(script.Parent.Parent)
-            if alienPlayer then
-                onCatch(alienPlayer, humanPlayer)
-                task.wait(1)
+    if not isTouching then
+        isTouching = true
+        if not script.Parent.Parent.HumanoidRootPart.Anchored then
+            local humanPlayer = Players:GetPlayerFromCharacter(otherPart.Parent)
+            if humanPlayer and not humanPlayer:FindFirstChild("isAlien").Value then
+                -- check that player character is valid as well
+                local alienPlayer = Players:GetPlayerFromCharacter(script.Parent.Parent)
+                if alienPlayer then
+                    onCatch(alienPlayer, humanPlayer)
+                end
             end
         end
+        task.wait(2)
+        isTouching = false
     end
-    isTouching = false
 end
 
 local hitbox = script.Parent
