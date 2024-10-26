@@ -1,7 +1,8 @@
 local CollectionService = game:GetService("CollectionService")
 local Players = game:GetService("Players")
-local PlayerTables = require(game:GetService("ServerScriptService").PlayerTables)
-local PointValues = require(game:GetService("ServerScriptService").PointValues)
+local GameData = game:GetService("ServerStorage"):WaitForChild("GameData")
+local PlayerTables = require(GameData:WaitForChild("PlayerTables"))
+local PointValues = require(GameData:WaitForChild("PointValues"))
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
 
 local function findPlayerPosition(table, player)

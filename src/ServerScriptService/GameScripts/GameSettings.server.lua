@@ -1,38 +1,15 @@
 local Players = game:GetService("Players")
 local CollectionService = game:GetService("CollectionService")
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
-local ServerStorage = game:GetService("ServerStorage")
-local playerData = ServerStorage:WaitForChild("PlayerData")
 local status = game.Workspace:WaitForChild("Status")
-local PlayerTables = require(game:GetService("ServerScriptService").PlayerTables)
-local PointValues = require(game:GetService("ServerScriptService").PointValues)
+local GameData = game:GetService("ServerStorage"):WaitForChild("GameData")
+local PlayerTables = require(GameData:WaitForChild("PlayerTables"))
+local PointValues = require(GameData:WaitForChild("PointValues"))
 
 local PLAYERS_NEEDED_TO_START = 2
 local INTERMISSION_TIME = 10
-local HUMAN_SPEED = 40
-local HUMAN_JUMP_POWER = 35
-local ALIEN_SPEED = 48
 local ALIEN_RESPAWN_BUFFER = 4
 local GAME_TIME = 60
-
-local function playerSettings(player)
-    player.CharacterAdded:Connect(function(character)
-        if player:FindFirstChild("isAlien") and player.isAlien.Value then
-            character.Humanoid.WalkSpeed = ALIEN_SPEED
-        else
-            character.Humanoid.WalkSpeed = HUMAN_SPEED
-            character.Humanoid.JumpPower = HUMAN_JUMP_POWER
-        end
-        character.Humanoid.DisplayDistanceType = Enum.HumanoidDisplayDistanceType.None
-    end)
-end
-
-local function instancePlayer(player)
-    for i, instance in pairs(playerData:GetChildren()) do -- pairs iterates through unknown key-value pairs in a table
-        local clonedInstance = instance:Clone()
-        clonedInstance.Parent = player -- clones every child found in playerData, and moves it into the player joining the game
-    end
-end
 
 local function respawnPlayers()
     for i, player in pairs(Players:GetPlayers()) do
@@ -177,8 +154,4 @@ local function gameLoop()
     gameLoop()
 end
 
-Players.PlayerAdded:Connect(function(player)
-    instancePlayer(player)
-    playerSettings(player)
-end)
 gameLoop()

@@ -17,11 +17,23 @@
       },
       "ServerScriptService": {
          "$ignoreUnknownInstances": true,
-         "$path": "src/ServerScriptService"
+         "$path": "src/ServerScriptService",
+         "GameScripts": {
+            "$className": "Folder",
+            "$path": "src/ServerScriptService/GameScripts"
+         },
+         "PersistentData": {
+            "$className": "Folder",
+            "$path": "src/ServerScriptService/PersistentData"
+         }
       },
       "ServerStorage": {
          "$ignoreUnknownInstances": true,
          "$className": "ServerStorage",
+         "GameData": {
+            "$className": "Folder",
+            "$path": "src/ServerStorage/GameData"
+         },
          "PlayerData": {
             "$className": "Folder",
             "leaderstats": {
