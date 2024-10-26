@@ -17,6 +17,9 @@ end
 
 -- if an alien catches a human, they respawn as an alien
 local function onCatch(alienPlayer, humanPlayer)
+    if alienPlayer:FindFirstChild("caughtHumans") and not alienPlayer.caughtHumans.Value then
+        alienPlayer.caughtHumans.Value = true
+    end
     alienPlayer.leaderstats.AlienPoints.Value = alienPlayer.leaderstats.AlienPoints.Value + PointValues.EatHuman
     humanPlayer:FindFirstChild("isAlien").Value = true
     table.remove(PlayerTables.HumansPlaying, findPlayerPosition(PlayerTables.HumansPlaying, humanPlayer))
@@ -39,7 +42,7 @@ local function onTouched(otherPart)
                 end
             end
         end
-        task.wait(2)
+        task.wait(1)
         isTouching = false
     end
 end

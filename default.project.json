@@ -17,7 +17,7 @@
       },
       "ServerScriptService": {
          "$ignoreUnknownInstances": true,
-         "$path": "src/ServerScriptService",
+         "$className": "ServerScriptService",
          "GameScripts": {
             "$className": "Folder",
             "$path": "src/ServerScriptService/GameScripts"
@@ -51,10 +51,16 @@
                   "$className": "IntValue"
                }
             },
+            "awardedPoints": {
+               "$className": "IntValue"
+            },
             "isAlien": {
                "$className": "BoolValue"
             },
             "modelChanged": {
+               "$className": "BoolValue"
+            },
+            "caughtHumans": {
                "$className": "BoolValue"
             }
          },

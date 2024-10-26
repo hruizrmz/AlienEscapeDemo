@@ -5,6 +5,8 @@ local status = game.Workspace:WaitForChild("Status")
 local GameData = game:GetService("ServerStorage"):WaitForChild("GameData")
 local PlayerTables = require(GameData:WaitForChild("PlayerTables"))
 local PointValues = require(GameData:WaitForChild("PointValues"))
+local CalculateResults = require(GameData:WaitForChild("CalculateResults"))
+
 
 local PLAYERS_NEEDED_TO_START = 2
 local INTERMISSION_TIME = 10
@@ -37,12 +39,41 @@ local function setUpGame()
             end
         end
         if player:FindFirstChild("isAlien").Value == true then
+            player:FindFirstChild("awardedPoints").Value = 0
             player:FindFirstChild("isAlien").Value = false
             player:FindFirstChild("modelChanged").Value = false
+            player:FindFirstChild("caughtHumans").Value = false
         end
         ReplicatedStorage.Remotes.HideSpectateUI:FireClient(player)
     end
     respawnPlayers()
+end
+
+local function calculateWinners()
+    local remainingPlayers = #PlayerTables.HumansPlaying
+	local total = remainingPlayers + #PlayerTables.Eaten + #PlayerTables.Escaped
+
+    if total == (#PlayerTables.Eaten + remainingPlayers) then
+        CalculateResults:FullAlienWin(PlayerTables, PointValues, total)
+        return "Aliens win! No human survived the hunt."
+    elseif total == #PlayerTables.Escaped then
+        CalculateResults:FullHumanWin(PlayerTables, PointValues, total)
+        return "Humans win! Everyone escaped the ship."
+    elseif (#PlayerTables.Eaten + remainingPlayers) > #PlayerTables.Escaped then
+        CalculateResults:AlienWin(PlayerTables, PointValues)
+        if #PlayerTables.Escaped == 1 then
+            return "Aliens took over the ship, but 1 human escaped..."
+        else
+            return "Aliens took over the ship, but "..#PlayerTables.Escaped.." humans escaped..."
+        end
+    else
+        CalculateResults:HumanWin(PlayerTables, PointValues)
+        if (#PlayerTables.Eaten + remainingPlayers) == 1 then
+            return "Most humans survived, but 1 human didn't escape..."
+        else
+            return "Most humans survived, but "..#PlayerTables.Eaten.." humans didn't escape..."
+        end
+    end
 end
 
 local function gameLoop()
@@ -132,7 +163,11 @@ local function gameLoop()
         task.wait(1)
         if #PlayerTables.HumansPlaying == 0 then
             status.Value = ""
-            ReplicatedStorage.Remotes.ShowResultsText:FireAllClients(PlayerTables, PointValues)
+            task.wait(1)
+            local resultsText = calculateWinners()
+            for i, player in pairs(Players:GetPlayers()) do
+                ReplicatedStorage.Remotes.ShowResultsText:FireClient(player, resultsText, player.awardedPoints.Value)
+            end
             task.wait(5)
 
             setUpGame()
@@ -147,7 +182,11 @@ local function gameLoop()
     end
 
     status.Value = ""
-    ReplicatedStorage.Remotes.ShowResultsText:FireAllClients(PlayerTables, PointValues)
+    task.wait(1)
+    local resultsText = calculateWinners()
+    for i, player in pairs(Players:GetPlayers()) do
+        ReplicatedStorage.Remotes.ShowResultsText:FireClient(player, resultsText, player.awardedPoints.Value)
+    end
     task.wait(5)
 
     setUpGame()
