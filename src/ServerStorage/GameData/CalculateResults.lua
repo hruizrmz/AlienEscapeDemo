@@ -1,6 +1,6 @@
 local CalculateResults = {}
 
-function CalculateResults:FullAlienWin(PlayerTables, PointValues, total)
+function CalculateResults:FullAlienWin(PlayerTables : table, PointValues : table, total : number)
 	for i, v in ipairs(PlayerTables.AliensPlaying) do -- from all alien players by the end of the game...
 		if not table.find(PlayerTables.OriginalAliens, v) then -- see if they were one of the original aliens
 			if v:FindFirstChild("caughtHumans") and v.caughtHumans.Value then -- if they were not, then see if they caught anyone
@@ -26,7 +26,7 @@ function CalculateResults:FullAlienWin(PlayerTables, PointValues, total)
 	end
 end
 
-function CalculateResults:FullHumanWin(PlayerTables, PointValues, total)
+function CalculateResults:FullHumanWin(PlayerTables : table, PointValues : table, total : number)
 	for i, v in ipairs(PlayerTables.Escaped) do
 		v.leaderstats.HumanWins.Value = v.leaderstats.HumanWins.Value + 1
 		if total > 9 then -- more points are given for fuller lobbies
@@ -39,7 +39,7 @@ function CalculateResults:FullHumanWin(PlayerTables, PointValues, total)
 	end
 end
 
-function CalculateResults:AlienWin(PlayerTables, PointValues)
+function CalculateResults:AlienWin(PlayerTables : table, PointValues : table)
 	for i, v in ipairs(PlayerTables.AliensPlaying) do -- from all alien players by the end of the game...
 		if not table.find(PlayerTables.OriginalAliens, v) then -- see if they were one of the original aliens
 			if v:FindFirstChild("caughtHumans") and v.caughtHumans.Value then -- if they were not, then see if they caught anyone
@@ -54,7 +54,7 @@ function CalculateResults:AlienWin(PlayerTables, PointValues)
 	
 end
 
-function CalculateResults:HumanWin(PlayerTables, PointValues)
+function CalculateResults:HumanWin(PlayerTables : table, PointValues : table)
 	for i, v in ipairs(PlayerTables.Escaped) do
 		v.leaderstats.HumanPoints.Value = v.leaderstats.HumanPoints.Value + PointValues.HumansWin
 		v.awardedPoints.Value = PointValues.HumansWin

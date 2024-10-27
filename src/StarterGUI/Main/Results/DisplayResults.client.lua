@@ -1,6 +1,6 @@
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
 
-ReplicatedStorage.Remotes.ShowResultsText.OnClientEvent:Connect(function(text, awardedPoints)
+ReplicatedStorage.Remotes.ShowResultsText.OnClientEvent:Connect(function(text : string, awardedPoints : number)
 	script.Parent.Text = ""..text.." (+"..awardedPoints.." pts)"
 
 	script.Parent.Visible = true

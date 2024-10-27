@@ -7,7 +7,6 @@ local PlayerTables = require(GameData:WaitForChild("PlayerTables"))
 local PointValues = require(GameData:WaitForChild("PointValues"))
 local CalculateResults = require(GameData:WaitForChild("CalculateResults"))
 
-
 local PLAYERS_NEEDED_TO_START = 2
 local INTERMISSION_TIME = 10
 local ALIEN_RESPAWN_BUFFER = 4
@@ -88,7 +87,7 @@ local function gameLoop()
         until #Players:GetPlayers() >= PLAYERS_NEEDED_TO_START
     end
 
-    if #Players:GetPlayers() == PLAYERS_NEEDED_TO_START then
+    if #Players:GetPlayers() >= PLAYERS_NEEDED_TO_START then
         for i = INTERMISSION_TIME, -1, -1 do
             task.wait(1)
             status.Value = "Prepare to run in "..i..""
@@ -104,7 +103,7 @@ local function gameLoop()
     local randomPlayerID = math.random(1, #Players:GetPlayers())
     local maxAliens = math.ceil(#Players:GetPlayers() / 3) -- aliens start a 1/3 of players for early game balance
     local selectedAliens = {}
-    local uniqueIDs = {}
+    local uniqueAlienIDs = {}
 
     for key, list in pairs(PlayerTables) do
         if type(list) == "table" then
@@ -113,8 +112,8 @@ local function gameLoop()
     end
 
     while #selectedAliens < maxAliens do
-        if not uniqueIDs[randomPlayerID] then -- find a new random player that is not already an alien
-            uniqueIDs[randomPlayerID] = true
+        if not uniqueAlienIDs[randomPlayerID] then -- find a new random player that is not already an alien
+            uniqueAlienIDs[randomPlayerID] = true
             table.insert(selectedAliens, randomPlayerID)
         else
             randomPlayerID = math.random(1, #Players:GetPlayers()) -- if we dont have maxAliens yet, assign another one
@@ -122,7 +121,7 @@ local function gameLoop()
     end
 
     for i, player in pairs(Players:GetPlayers()) do
-        if uniqueIDs[i] then
+        if uniqueAlienIDs[i] then
             player:FindFirstChild("isAlien").Value = true
             table.insert(PlayerTables.AliensPlaying, player)
             table.insert(PlayerTables.OriginalAliens, player)
@@ -137,7 +136,7 @@ local function gameLoop()
     task.wait(1)
 
     for i, player in pairs(Players:GetPlayers()) do
-        if uniqueIDs[i] then
+        if uniqueAlienIDs[i] then
             ReplicatedStorage.Remotes.ShowRoleText:FireClient(player,true)
         else
             ReplicatedStorage.Remotes.ShowRoleText:FireClient(player,false)

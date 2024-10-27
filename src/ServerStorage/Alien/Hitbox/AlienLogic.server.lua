@@ -6,13 +6,14 @@ local PointValues = require(GameData:WaitForChild("PointValues"))
 local spawnLocation = game.Workspace:WaitForChild("SpawnLocation")
 local isTouching = false
 
-local function findPlayerPosition(table, player)
-    for i, v in ipairs(table) do
+local function findPlayerPosition(humansPlaying : table, player)
+    for i, v in ipairs(humansPlaying) do
         if v == player then
             return i
         end
     end
-    return nil -- player was not found
+    warn("Player was not found in Player Tables!")
+    return nil
 end
 
 -- if an alien catches a human, they respawn as an alien
@@ -42,10 +43,10 @@ local function onTouched(otherPart)
                 end
             end
         end
-        task.wait(1)
+        task.wait(2) -- touch cooldown
         isTouching = false
     end
 end
 
-local hitbox = script.Parent
+local hitbox : BasePart = script.Parent
 hitbox.Touched:Connect(onTouched)

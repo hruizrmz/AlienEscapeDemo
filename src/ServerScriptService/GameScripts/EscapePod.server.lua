@@ -5,16 +5,17 @@ local PlayerTables = require(GameData:WaitForChild("PlayerTables"))
 local PointValues = require(GameData:WaitForChild("PointValues"))
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
 
-local function findPlayerPosition(table, player)
-    for i, v in ipairs(table) do
+local function findPlayerPosition(humansPlaying : table, player)
+    for i, v in ipairs(humansPlaying) do
         if v == player then
             return i
         end
     end
-    return nil -- player was not found
+    warn("Player was not found in Player Tables!")
+    return nil
 end
 
-local function onTouched(otherPart, door)
+local function onTouched(otherPart, door : Object)
     if not door:FindFirstChild("Occupied").Value then
         local player = Players:GetPlayerFromCharacter(otherPart.Parent)
         if player and not player:FindFirstChild("isAlien").Value then
