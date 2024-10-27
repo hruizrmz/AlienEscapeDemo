@@ -7,10 +7,10 @@ local PlayerTables = require(GameData:WaitForChild("PlayerTables"))
 local PointValues = require(GameData:WaitForChild("PointValues"))
 local CalculateResults = require(GameData:WaitForChild("CalculateResults"))
 
-local PLAYERS_NEEDED_TO_START = 1
+local PLAYERS_NEEDED_TO_START = 2
 local INTERMISSION_TIME = 10
 local ALIEN_RESPAWN_BUFFER = 4
-local GAME_TIME = 60
+local GAME_TIME = 90
 
 local function respawnPlayers()
     for i, player : Player in pairs(Players:GetPlayers()) do
@@ -101,7 +101,7 @@ local function gameLoop()
 
     -- assigning roles
     local randomPlayerID = math.random(1, #Players:GetPlayers())
-    local maxAliens = math.ceil(#Players:GetPlayers() / 3) -- aliens start a 1/3 of players for early game balance
+    local maxAliens = math.floor(#Players:GetPlayers() / 2) -- lobbies can be up to 10 players as there's only 5 escape pods
     local selectedAliens = {}
     local uniqueAlienIDs = {}
 

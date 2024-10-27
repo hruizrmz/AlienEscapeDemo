@@ -7,7 +7,7 @@ local sessionData = {}
 
 local HUMAN_SPEED = 40
 local HUMAN_JUMP_POWER = 35
-local ALIEN_SPEED = 48
+local ALIEN_SPEED = 52
 
 local function playerSettings(player : Player)
     player.CharacterAdded:Connect(function(character)
