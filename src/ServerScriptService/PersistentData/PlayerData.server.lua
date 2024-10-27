@@ -38,7 +38,6 @@ local function loadPlayerScore(player : Player)
     until success or attempt == 5
 
     if success then
-        print("Connected to database")
         if not playerScore then
             print("No player data history found.")
             playerScore = {

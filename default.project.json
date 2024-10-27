@@ -30,6 +30,9 @@
       "ServerStorage": {
          "$ignoreUnknownInstances": true,
          "$className": "ServerStorage",
+         "SoundManager": {
+            "$path": "src/ServerStorage/SoundManager.lua"
+         },
          "GameData": {
             "$className": "Folder",
             "$path": "src/ServerStorage/GameData"

@@ -2,15 +2,18 @@ local Players = game:GetService("Players")
 local CollectionService = game:GetService("CollectionService")
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
 local status = game.Workspace:WaitForChild("Status")
-local GameData = game:GetService("ServerStorage"):WaitForChild("GameData")
+local ServerStorage = game:GetService("ServerStorage")
+local GameData = ServerStorage:WaitForChild("GameData")
 local PlayerTables = require(GameData:WaitForChild("PlayerTables"))
 local PointValues = require(GameData:WaitForChild("PointValues"))
 local CalculateResults = require(GameData:WaitForChild("CalculateResults"))
+local SoundManager = require(ServerStorage:WaitForChild("SoundManager"))
 
 local PLAYERS_NEEDED_TO_START = 2
 local INTERMISSION_TIME = 10
 local ALIEN_RESPAWN_BUFFER = 4
 local GAME_TIME = 90
+local BGM_VOLUME = 0.6
 
 local function respawnPlayers()
     for i, player : Player in pairs(Players:GetPlayers()) do
@@ -76,6 +79,7 @@ local function calculateWinners()
 end
 
 local function gameLoop()
+    SoundManager.PlayBGM("LobbyMusic", BGM_VOLUME, 20)
     -- waiting for players
     status.Value = "Loading..."
     task.wait(1)
@@ -132,9 +136,11 @@ local function gameLoop()
     end
 
     -- preparing game arena
+    SoundManager.StopBGM("LobbyMusic")
     respawnPlayers()
     task.wait(1)
-
+    SoundManager.PlayBGM("GameMusic", BGM_VOLUME)
+    
     for i, player : Player in pairs(Players:GetPlayers()) do
         if uniqueAlienIDs[i] then
             ReplicatedStorage.Remotes.ShowRoleText:FireClient(player,true)
@@ -167,6 +173,7 @@ local function gameLoop()
             for i, player : Player in pairs(Players:GetPlayers()) do
                 ReplicatedStorage.Remotes.ShowResultsText:FireClient(player, resultsText, player.awardedPoints.Value)
             end
+            SoundManager.StopBGM("GameMusic")
             task.wait(5)
 
             setUpGame()
@@ -186,6 +193,7 @@ local function gameLoop()
     for i, player : Player in pairs(Players:GetPlayers()) do
         ReplicatedStorage.Remotes.ShowResultsText:FireClient(player, resultsText, player.awardedPoints.Value)
     end
+    SoundManager.StopBGM("GameMusic")
     task.wait(5)
 
     setUpGame()

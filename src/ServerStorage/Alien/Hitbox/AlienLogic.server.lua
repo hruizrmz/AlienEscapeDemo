@@ -3,7 +3,7 @@ local GameData = game:GetService("ServerStorage"):WaitForChild("GameData")
 local PlayerTables = require(GameData:WaitForChild("PlayerTables"))
 local PointValues = require(GameData:WaitForChild("PointValues"))
 
-local spawnLocation = game.Workspace:WaitForChild("SpawnLocation")
+local spawnLocation = game.Workspace:FindFirstChild("SpawnPoints"):WaitForChild("SpawnLocation1")
 local isTouching = false
 
 local function findPlayerPosition(humansPlaying : table, player)
