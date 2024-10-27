@@ -10,7 +10,7 @@ ReplicatedStorage.Remotes.ShowRoleText.OnClientEvent:Connect(function(alienPlaye
 	script.Parent.Visible = true
 	task.wait(2)
 
-	for i = 1,20 do -- fade out text animation
+	for i = 1, 20 do -- fade out text animation
 		script.Parent.TextTransparency += 0.05
 		script.Parent.TextStrokeTransparency += 0.05
 		task.wait(0.05)

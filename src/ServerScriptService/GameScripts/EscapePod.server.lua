@@ -5,8 +5,8 @@ local PlayerTables = require(GameData:WaitForChild("PlayerTables"))
 local PointValues = require(GameData:WaitForChild("PointValues"))
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
 
-local function findPlayerPosition(humansPlaying : table, player)
-    for i, v in ipairs(humansPlaying) do
+local function findPlayerPosition(humansPlaying : table, player : Player)
+    for i, v : Player in ipairs(humansPlaying) do
         if v == player then
             return i
         end
@@ -38,7 +38,7 @@ local function onTouched(otherPart, door : Object)
     end
 end
 
-for i, door in pairs(CollectionService:GetTagged("EscapePodDoor")) do
+for i, door : Object in pairs(CollectionService:GetTagged("EscapePodDoor")) do
     door.Touched:Connect(function(otherPart)
         onTouched(otherPart, door)
     end)

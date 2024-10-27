@@ -7,13 +7,13 @@ local PlayerTables = require(GameData:WaitForChild("PlayerTables"))
 local PointValues = require(GameData:WaitForChild("PointValues"))
 local CalculateResults = require(GameData:WaitForChild("CalculateResults"))
 
-local PLAYERS_NEEDED_TO_START = 2
+local PLAYERS_NEEDED_TO_START = 1
 local INTERMISSION_TIME = 10
 local ALIEN_RESPAWN_BUFFER = 4
 local GAME_TIME = 60
 
 local function respawnPlayers()
-    for i, player in pairs(Players:GetPlayers()) do
+    for i, player : Player in pairs(Players:GetPlayers()) do
         if player.Character then
             player.Character:Destroy()
         end
@@ -24,15 +24,15 @@ end
 
 local function setUpGame()
     status.Value = ""
-    for i, door in pairs(CollectionService:GetTagged("EscapePodDoor")) do
+    for i, door : Object in pairs(CollectionService:GetTagged("EscapePodDoor")) do
         door.Occupied.Value = true
         door.Material = "DiamondPlate"
         door.BrickColor = BrickColor.new("Maroon")
         door.Transparency = 0.2
         door.CollisionGroup = "Default"
     end
-    for i, player in pairs(Players:GetPlayers()) do
-        for key, list in pairs(PlayerTables) do
+    for i, player : Player in pairs(Players:GetPlayers()) do
+        for key, list : table in pairs(PlayerTables) do
             if type(list) == "table" then
                 table.clear(list)
             end
@@ -105,7 +105,7 @@ local function gameLoop()
     local selectedAliens = {}
     local uniqueAlienIDs = {}
 
-    for key, list in pairs(PlayerTables) do
+    for key, list : table in pairs(PlayerTables) do
         if type(list) == "table" then
             table.clear(list)
         end
@@ -120,7 +120,7 @@ local function gameLoop()
         end
     end
 
-    for i, player in pairs(Players:GetPlayers()) do
+    for i, player : Player in pairs(Players:GetPlayers()) do
         if uniqueAlienIDs[i] then
             player:FindFirstChild("isAlien").Value = true
             table.insert(PlayerTables.AliensPlaying, player)
@@ -135,7 +135,7 @@ local function gameLoop()
     respawnPlayers()
     task.wait(1)
 
-    for i, player in pairs(Players:GetPlayers()) do
+    for i, player : Player in pairs(Players:GetPlayers()) do
         if uniqueAlienIDs[i] then
             ReplicatedStorage.Remotes.ShowRoleText:FireClient(player,true)
         else
@@ -143,7 +143,7 @@ local function gameLoop()
         end
     end
 
-    for i, door in pairs(CollectionService:GetTagged("EscapePodDoor")) do
+    for i, door : Object in pairs(CollectionService:GetTagged("EscapePodDoor")) do
         door.Occupied.Value = false
         door.Material = "CrackedLava"
         door.BrickColor = BrickColor.new("Teal")
@@ -164,7 +164,7 @@ local function gameLoop()
             status.Value = ""
             task.wait(1)
             local resultsText = calculateWinners()
-            for i, player in pairs(Players:GetPlayers()) do
+            for i, player : Player in pairs(Players:GetPlayers()) do
                 ReplicatedStorage.Remotes.ShowResultsText:FireClient(player, resultsText, player.awardedPoints.Value)
             end
             task.wait(5)
@@ -183,7 +183,7 @@ local function gameLoop()
     status.Value = ""
     task.wait(1)
     local resultsText = calculateWinners()
-    for i, player in pairs(Players:GetPlayers()) do
+    for i, player : Player in pairs(Players:GetPlayers()) do
         ReplicatedStorage.Remotes.ShowResultsText:FireClient(player, resultsText, player.awardedPoints.Value)
     end
     task.wait(5)

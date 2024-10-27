@@ -7,7 +7,7 @@ local spawnLocation = game.Workspace:WaitForChild("SpawnLocation")
 local isTouching = false
 
 local function findPlayerPosition(humansPlaying : table, player)
-    for i, v in ipairs(humansPlaying) do
+    for i, v : Player in ipairs(humansPlaying) do
         if v == player then
             return i
         end
