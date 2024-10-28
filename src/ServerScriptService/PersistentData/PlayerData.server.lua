@@ -2,12 +2,12 @@ local Players = game:GetService("Players")
 local playerData = game:GetService("ServerStorage"):WaitForChild("PlayerData")
 local DataStoreService = game:GetService("DataStoreService")
 
-local database = DataStoreService:GetDataStore("playerScores")
+local database = DataStoreService:GetDataStore("AlienEscapeScores")
 local sessionData = {}
 
 local HUMAN_SPEED = 35
 local HUMAN_JUMP_POWER = 35
-local ALIEN_SPEED = 55
+local ALIEN_SPEED = 53
 
 local function playerSettings(player : Player)
     player.CharacterAdded:Connect(function(character)
@@ -39,7 +39,7 @@ local function loadPlayerScore(player : Player)
 
     if success then
         if not playerScore then
-            print("No player data history found.")
+            warn("No player data history found.")
             playerScore = {
                 ["AlienPoints"] = 0,
                 ["AlienWins"] = 0,
@@ -70,8 +70,6 @@ local function loadPlayerScore(player : Player)
     leaderstats:FindFirstChild("HumanWins").Changed:Connect(function()
         playerScore.HumanWins = leaderstats:FindFirstChild("HumanWins").Value
     end)
-
-    print("Finished loading data for ", player.Name)
 end
 
 local function instancePlayer(player : Player)
@@ -99,16 +97,13 @@ local function savePlayerScore(player : Player)
             end
         until success or attempt == 5
 
-        if success then
-            print("Data saved for ", player.Name)
-        else
+        if not success then
             warn("Data not saved for ", player.Name) -- could not save after 5 attempts
         end
     end
 end
 
 local function serverShutdown()
-    print("Server shutting down")
     for i, player : Player in ipairs(Players:GetPlayers()) do
         task.spawn(function()
             savePlayerScore(player)

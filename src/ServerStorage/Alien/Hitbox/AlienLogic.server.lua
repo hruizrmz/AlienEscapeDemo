@@ -52,5 +52,5 @@ local function onTouched(otherPart)
 end
 
 local alienHitbox : BasePart = script.Parent
-alienHitbox.Size = Vector3.new(3, 8, 3.5)
+alienHitbox.Size = Vector3.new(3, 8, 3.3)
 alienHitbox.Touched:Connect(onTouched)

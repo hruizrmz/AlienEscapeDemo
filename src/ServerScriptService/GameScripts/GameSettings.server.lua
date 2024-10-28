@@ -11,7 +11,7 @@ local SoundManager = require(ServerStorage:WaitForChild("SoundManager"))
 
 local PLAYERS_NEEDED_TO_START = 2
 local INTERMISSION_TIME = 10
-local ALIEN_RESPAWN_BUFFER = 4
+local ALIEN_RESPAWN_BUFFER = 5
 local GAME_TIME = 90
 local BGM_VOLUME = 0.6
 
