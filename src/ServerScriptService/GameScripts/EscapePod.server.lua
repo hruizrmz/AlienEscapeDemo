@@ -1,6 +1,8 @@
 local CollectionService = game:GetService("CollectionService")
 local Players = game:GetService("Players")
-local GameData = game:GetService("ServerStorage"):WaitForChild("GameData")
+local ServerStorage = game:GetService("ServerStorage")
+local GameData = ServerStorage:WaitForChild("GameData")
+local SoundManager = require(ServerStorage:WaitForChild("SoundManager"))
 local PlayerTables = require(GameData:WaitForChild("PlayerTables"))
 local PointValues = require(GameData:WaitForChild("PointValues"))
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
@@ -19,6 +21,7 @@ local function onTouched(otherPart, door : Object)
     if not door:FindFirstChild("Occupied").Value then
         local player = Players:GetPlayerFromCharacter(otherPart.Parent)
         if player and not player:FindFirstChild("isAlien").Value then
+            SoundManager.PlaySFX("PodDoor")
             door.Occupied.Value = true
             door.Material = "DiamondPlate"
             door.BrickColor = BrickColor.new("Maroon")
@@ -43,4 +46,3 @@ for i, door : Object in pairs(CollectionService:GetTagged("EscapePodDoor")) do
         onTouched(otherPart, door)
     end)
 end
-

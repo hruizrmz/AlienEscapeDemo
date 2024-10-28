@@ -7,10 +7,12 @@ local CurrentBGM = Workspace:WaitForChild("BGM")
 
 local SoundManager = {}
 
+local SFX_VOLUME = 0.6
+
 function SoundManager.PlaySFX(sfxName : string, volume : number)
     local sound = SFX[sfxName]:Clone()
     if sound then
-        sound.Volume = volume
+        sound.Volume = volume or SFX_VOLUME
         sound.Parent = CurrentSFX
         sound:Play()
         task.wait(sound.TimeLength + 0.05)
@@ -37,7 +39,6 @@ function SoundManager.PlayBGM(bgmName : string, volume : number, timePos : numbe
 end
 
 function SoundManager.StopBGM(bgmName : string)
-    print(typeof(bgmName))
     local sound = CurrentBGM:FindFirstChild(bgmName)
     if sound then
         while sound.Volume > 0 do

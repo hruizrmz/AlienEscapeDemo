@@ -2,19 +2,6 @@
    "name": "project",
    "tree": {
       "$className": "DataModel",
-      "Workspace": {
-         "$ignoreUnknownInstances": true,
-         "SpawnLocation": {
-            "$className": "SpawnLocation",
-            "Hitbox": {
-               "$className": "Part",
-               "$path": "src/Workspace/SpawnLocation/Hitbox",
-               "WeldConstraint": {
-                  "$className": "WeldConstraint"
-               }
-            }
-         }
-      },
       "ServerScriptService": {
          "$ignoreUnknownInstances": true,
          "$className": "ServerScriptService",

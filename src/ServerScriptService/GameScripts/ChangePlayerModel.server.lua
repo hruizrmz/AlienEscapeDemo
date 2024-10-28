@@ -1,3 +1,4 @@
+local CollectionService = game:GetService("CollectionService")
 local Workspace = game:GetService("Workspace")
 local Players = game:GetService("Players")
 local ServerStorage = game:GetService("ServerStorage")
@@ -22,5 +23,8 @@ local function onTouched(otherPart) -- when player respawns, check if their mode
     end
 end
 
-local hitbox : BasePart = script.Parent
-hitbox.Touched:Connect(onTouched)
+for i, hitbox : Object in pairs(CollectionService:GetTagged("SpawnHitbox")) do
+    hitbox.Touched:Connect(function(otherPart)
+        onTouched(otherPart)
+    end)
+end

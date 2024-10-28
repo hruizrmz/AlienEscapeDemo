@@ -157,10 +157,11 @@ local function gameLoop()
         door.CollisionGroup = "PodDoors"
     end
 
-    for i = ALIEN_RESPAWN_BUFFER, -1, -1 do
+    for i = ALIEN_RESPAWN_BUFFER, 0, -1 do
         task.wait(1)
         status.Value = "Aliens will wake up in "..i..""
     end
+    SoundManager.PlaySFX("StartGame")
     status.Value = ""
 
     -- game time logic
@@ -173,9 +174,9 @@ local function gameLoop()
             for i, player : Player in pairs(Players:GetPlayers()) do
                 ReplicatedStorage.Remotes.ShowResultsText:FireClient(player, resultsText, player.awardedPoints.Value)
             end
-            SoundManager.StopBGM("GameMusic")
             task.wait(5)
 
+            SoundManager.StopBGM("GameMusic")
             setUpGame()
             gameLoop()
             return
@@ -193,9 +194,9 @@ local function gameLoop()
     for i, player : Player in pairs(Players:GetPlayers()) do
         ReplicatedStorage.Remotes.ShowResultsText:FireClient(player, resultsText, player.awardedPoints.Value)
     end
-    SoundManager.StopBGM("GameMusic")
     task.wait(5)
 
+    SoundManager.StopBGM("GameMusic")
     setUpGame()
     gameLoop()
 end

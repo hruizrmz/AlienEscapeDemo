@@ -1,5 +1,7 @@
 local Players = game:GetService("Players")
-local GameData = game:GetService("ServerStorage"):WaitForChild("GameData")
+local ServerStorage = game:GetService("ServerStorage")
+local GameData = ServerStorage:WaitForChild("GameData")
+local SoundManager = require(ServerStorage:WaitForChild("SoundManager"))
 local PlayerTables = require(GameData:WaitForChild("PlayerTables"))
 local PointValues = require(GameData:WaitForChild("PointValues"))
 
@@ -28,6 +30,7 @@ local function onCatch(alienPlayer, humanPlayer)
     table.insert(PlayerTables.AliensPlaying, humanPlayer)
     -- move player back to spawn point instead of loading
     humanPlayer.Character.HumanoidRootPart.CFrame = spawnLocation.CFrame + Vector3.new(0, 5, 0)
+    SoundManager.PlaySFX("AlienRoar", 0.35)
 end
 
 local function onTouched(otherPart)
