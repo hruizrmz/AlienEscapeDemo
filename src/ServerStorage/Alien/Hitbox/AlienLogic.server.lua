@@ -46,10 +46,11 @@ local function onTouched(otherPart)
                 end
             end
         end
-        task.wait(2) -- touch cooldown
+        task.wait(1) -- touch cooldown
         isTouching = false
     end
 end
 
-local hitbox : BasePart = script.Parent
-hitbox.Touched:Connect(onTouched)
+local alienHitbox : BasePart = script.Parent
+alienHitbox.Size = Vector3.new(3, 8, 3.5)
+alienHitbox.Touched:Connect(onTouched)

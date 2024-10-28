@@ -21,7 +21,6 @@ local function onTouched(otherPart, door : Object)
     if not door:FindFirstChild("Occupied").Value then
         local player = Players:GetPlayerFromCharacter(otherPart.Parent)
         if player and not player:FindFirstChild("isAlien").Value then
-            SoundManager.PlaySFX("PodDoor")
             door.Occupied.Value = true
             door.Material = "DiamondPlate"
             door.BrickColor = BrickColor.new("Maroon")
@@ -37,6 +36,7 @@ local function onTouched(otherPart, door : Object)
             local seat = door:FindFirstChild("PodSeat")
             character:MoveTo(seat.Position)
             player.Character.Humanoid.JumpPower = 0
+            SoundManager.PlaySFX("PodDoor")
         end
     end
 end

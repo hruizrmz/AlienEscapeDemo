@@ -5,9 +5,9 @@ local DataStoreService = game:GetService("DataStoreService")
 local database = DataStoreService:GetDataStore("playerScores")
 local sessionData = {}
 
-local HUMAN_SPEED = 38
+local HUMAN_SPEED = 35
 local HUMAN_JUMP_POWER = 35
-local ALIEN_SPEED = 52
+local ALIEN_SPEED = 55
 
 local function playerSettings(player : Player)
     player.CharacterAdded:Connect(function(character)

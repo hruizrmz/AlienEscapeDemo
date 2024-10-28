@@ -23,8 +23,8 @@ local function onTouched(otherPart) -- when player respawns, check if their mode
     end
 end
 
-for i, hitbox : Object in pairs(CollectionService:GetTagged("SpawnHitbox")) do
-    hitbox.Touched:Connect(function(otherPart)
+for i, spawnHitbox : Object in pairs(CollectionService:GetTagged("SpawnHitbox")) do
+    spawnHitbox.Touched:Connect(function(otherPart)
         onTouched(otherPart)
     end)
 end
